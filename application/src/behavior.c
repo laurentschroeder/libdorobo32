@@ -7,19 +7,16 @@
 
 #include <libdorobo32.h>
 #include "environment.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 #define TARGET_FREQ 100
 
 void handle_distance(void);
 void handle_infrared(void);
-void control_motors(void);
+void control_motors(motorflag_t, uint32_t);
 
-void behavior()
-{
-    handle_bumpers();
-}
-
-void control_motors()
+void control_motors(motorflag_t motorflag, uint32_t ticks)
 {
   switch(motorflag)
   {
@@ -29,13 +26,13 @@ void control_motors()
       motorcontrol(MOTOR2,0);
       break;
 
-    case rechts:
+    case links:
       motorcontrol(MOTOR0,0);
       motorcontrol(MOTOR1,0);
       motorcontrol(MOTOR2,-100);
       break;
 
-    case links:
+    case rechts:
       motorcontrol(MOTOR0,0);
       motorcontrol(MOTOR1,0);
       motorcontrol(MOTOR2,100);
@@ -65,28 +62,37 @@ void control_motors()
       motorcontrol(MOTOR2,0);
       break;
   }
+  HAL_Delay(ticks);
 }
 
 void handle_distance()
 {
   if(distance_left > distance_threshold && distance_right > distance_threshold)
     {
-      motorflag = drehen;
-      control_motors();
+      control_motors(rueckwaerts, 100);
     }
   else if(distance_left > distance_threshold)
     {
-      motorflag = rechts;
-      control_motors();
+      control_motors(stop, 500);
+      control_motors(rueckwaerts, 250);
+      control_motors(rechts, 250);
     }
   else if(distance_right > distance_threshold)
     {
-      motorflag = links;
-      control_motors();
+      control_motors(stop, 500);
+      control_motors(rueckwaerts, 250);
+      control_motors(links, 250);
     }
   else
     {
-      handle_infrared();
+      if(get_pin(DIP0))
+      {
+          handle_infrared();
+      }
+      else
+      {
+          control_motors(geradeaus, 10);
+      }
     }
 }
 
@@ -108,32 +114,31 @@ void handle_infrared()
     if(*ir_left > infrared_threshold && *ir_right > infrared_threshold)
     {
         //IR Signal auf beiden Empfängern vorhanden
-        motorflag = geradeaus;
+        control_motors(geradeaus, 100);
     }
     else if(*ir_left < infrared_threshold && *ir_right < infrared_threshold)
     {
         //Kein Signal auf beiden Empfängern
-        motorflag = drehen;
+        control_motors(drehen, 100);
     }
     else if(*ir_left > infrared_threshold)
     {
         //Signal nur links detektiert
-        motorflag = links;
+        control_motors(links, 100);
     }
     else
     {
         //Signal nur rechts detektiert
-        motorflag = rechts;
+        control_motors(rechts, 100);
     }
-    control_motors();
+
 }
 
 void handle_bumpers()
 {
     if(!bumper_left || !bumper_right)
     {
-        motorflag = rueckwaerts;
-        control_motors();
+        control_motors(stop, 1);
     }
     else
     {

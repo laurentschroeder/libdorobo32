@@ -197,7 +197,7 @@ void MX_ADC_Init(void)
     */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
-  sConfig.SamplingTime = ADC_SAMPLETIME_28CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
   HAL_ADC_ConfigChannel(&hadc, &sConfig);
 
     /**Configure for the selected ADC regular channel to be converted. 
@@ -286,9 +286,9 @@ void MX_TIM3_Init(void)
   TIM_OC_InitTypeDef sConfigOC;
 
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 1;
+  htim3.Init.Prescaler = 20;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 960;
+  htim3.Init.Period = 100;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   HAL_TIM_Base_Init(&htim3);
 
@@ -541,7 +541,7 @@ void MX_GPIO_Init(void)
   /*Configure GPIO pins : DIGITAL5_Pin DIGITAL2_Pin DIGITAL3_Pin */
   GPIO_InitStruct.Pin = DIGITAL5_Pin|DIGITAL2_Pin|DIGITAL3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LED1_Pin LED0_Pin M3B2_Pin */
@@ -565,29 +565,35 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(M1B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DIGITAL0_Pin DIGITAL1_Pin DIP3_Pin */
-  GPIO_InitStruct.Pin = DIGITAL0_Pin|DIGITAL1_Pin|DIP3_Pin;
+  /*Configure GPIO pins : DIGITAL0_Pin DIGITAL1_Pin */
+  GPIO_InitStruct.Pin = DIGITAL0_Pin|DIGITAL1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pin : DIGITAL4_Pin */
   GPIO_InitStruct.Pin = DIGITAL4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(DIGITAL4_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : M0A2_Pin */
   GPIO_InitStruct.Pin = M0A2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(M0A2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : DIP3_Pin */
+  GPIO_InitStruct.Pin = DIP3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(DIP3_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DIP2_Pin DIP1_Pin DIP0_Pin */
   GPIO_InitStruct.Pin = DIP2_Pin|DIP1_Pin|DIP0_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }

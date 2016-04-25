@@ -24,10 +24,10 @@ enum EDIGITAL
   SERVO3,
   SERVO4,
   SERVO5,
+  DIP0,
   DIP1,
   DIP2,
   DIP3,
-  DIP4,
   LED0,
   LED1
 };

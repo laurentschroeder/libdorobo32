@@ -21,4 +21,9 @@ extern uint16_t infrared_threshold;
 extern uint8_t bumper_left;
 extern uint8_t bumper_right;
 
+extern uint8_t dip0;
+extern uint8_t dip1;
+extern uint8_t dip2;
+extern uint8_t dip3;
+
 #endif /* INC_ENVIRONMENT_H_ */

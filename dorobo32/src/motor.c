@@ -14,8 +14,6 @@
 extern TIM_HandleTypeDef htim3;
 TIM_OC_InitTypeDef sConfigOC;
 
-motorflag_t motorflag = geradeaus;
-
 typedef struct
 {
   GPIO_TypeDef *controlPORT1;
@@ -138,6 +136,9 @@ void motorcontrol(enum EMOTOR motoren, int8_t speed)
 
 static void pwm_ramp(motor_t *motorptr, uint8_t old_value, uint8_t new_value)
 {
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   uint8_t i;
 
   if(old_value < new_value)
@@ -147,7 +148,7 @@ static void pwm_ramp(motor_t *motorptr, uint8_t old_value, uint8_t new_value)
           sConfigOC.Pulse = old_value + i;
           HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, motorptr->timerChannel);
           HAL_TIM_PWM_Start(&htim3, motorptr->timerChannel);
-          vTaskDelay(5);
+          vTaskDelay(1);
         }
     }
   else if(old_value > new_value)
@@ -157,7 +158,7 @@ static void pwm_ramp(motor_t *motorptr, uint8_t old_value, uint8_t new_value)
           sConfigOC.Pulse = old_value - i;
           HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, motorptr->timerChannel);
           HAL_TIM_PWM_Start(&htim3, motorptr->timerChannel);
-          vTaskDelay(5);
+          vTaskDelay(1);
         }
     }
 

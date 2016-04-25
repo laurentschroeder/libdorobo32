@@ -9,6 +9,8 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "environment.h"
+#include "behavior.h"
+#include "stdio.h"
 
 //init() is defined in libsthal
 extern void init();
@@ -44,14 +46,14 @@ void job_sense(void * pvParameters)
         bumper_right = get_pin(DIGITAL3);
         distance_left = adc_get_value(ADC_CHANNEL0);
         distance_right = adc_get_value(ADC_CHANNEL1);
-        taskYIELD();
-    }
-}
-
-void job_motorcontrol(void * pvParameters)
-{
-    for(;;)
-    {
+        dip0 = get_pin(DIP0);
+        dip1 = get_pin(DIP1);
+        dip2 = get_pin(DIP2);
+        dip3 = get_pin(DIP3);
+        if(dip1)
+        {
+            handle_bumpers();
+        }
         taskYIELD();
     }
 }
@@ -62,12 +64,12 @@ void add_tasks()
     TaskHandle_t blink_handle = NULL;
     TaskHandle_t fft_handle = NULL;
     TaskHandle_t sense_handle = NULL;
-    TaskHandle_t motorcontrol_handle = NULL;
+
 
     xReturned = xTaskCreate(
                     job_blink_led,
                     "blink_task",
-                    128,
+                    256,
                     ((void*)1),
                     1,
                     &blink_handle);
@@ -83,18 +85,11 @@ void add_tasks()
     xReturned = xTaskCreate(
                     job_sense,
                     "sense_task",
-                    128,
+                    256,
                     ((void*)1),
                     1,
                     &sense_handle);
 
-    xReturned = xTaskCreate(
-                        job_motorcontrol,
-                        "motorcontrol_task",
-                        128,
-                        ((void*)1),
-                        1,
-                        &motorcontrol_handle);
 }
 
 int main()

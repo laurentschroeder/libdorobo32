@@ -22,8 +22,6 @@ typedef enum {
   drehen
 }motorflag_t;
 
-extern motorflag_t motorflag;
-
 extern void motorcontrol(enum EMOTOR, int8_t speed);
 
 #endif /* DOROBO32_INC_MOTOR_H_ */

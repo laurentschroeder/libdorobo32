@@ -256,8 +256,8 @@ g_pfnVectors:
   .weak      TIM2_IRQHandler
   .thumb_set TIM2_IRQHandler,Default_Handler
 
-  .weak      TIM3_IRQHandler
-  .thumb_set TIM3_IRQHandler,Default_Handler
+  //.weak      TIM3_IRQHandler
+  //.thumb_set TIM3_IRQHandler,Default_Handler
 
   //.weak      TIM6_DAC_IRQHandler
   //.thumb_set TIM6_DAC_IRQHandler,Default_Handler
@@ -289,11 +289,11 @@ g_pfnVectors:
   .weak      SPI2_IRQHandler
   .thumb_set SPI2_IRQHandler,Default_Handler
 
-  .weak      USART1_IRQHandler
-  .thumb_set USART1_IRQHandler,Default_Handler
+  //.weak      USART1_IRQHandler
+  //.thumb_set USART1_IRQHandler,Default_Handler
 
-  .weak      USART2_IRQHandler
-  .thumb_set USART2_IRQHandler,Default_Handler
+  //.weak      USART2_IRQHandler
+  //.thumb_set USART2_IRQHandler,Default_Handler
 
   .weak      USART3_4_IRQHandler
   .thumb_set USART3_4_IRQHandler,Default_Handler

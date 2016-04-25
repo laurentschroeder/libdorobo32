@@ -112,25 +112,25 @@ static void selectPin(enum EDIGITAL DIGITAL_pins, pin_t* currentPin)
 		  currentPin->pin = SERVO5_Pin;
 		  break;
 	  }
-	  case DIP1:
+	  case DIP0:
 	  {
 		  currentPin->port = DIP0_GPIO_Port;
 		  currentPin->pin = DIP0_Pin;
 		  break;
 	  }
-	  case DIP2:
+	  case DIP1:
 	  {
 		  currentPin->port = DIP1_GPIO_Port;
 		  currentPin->pin = DIP1_Pin;
 		  break;
 	  }
-	  case DIP3:
+	  case DIP2:
 	  {
 		  currentPin->port = DIP2_GPIO_Port;
 		  currentPin->pin = DIP2_Pin;
 		  break;
 	  }
-	  case DIP4:
+	  case DIP3:
 	  {
 		  currentPin->port = DIP3_GPIO_Port;
 		  currentPin->pin = DIP3_Pin;

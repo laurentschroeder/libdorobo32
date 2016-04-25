@@ -1,0 +1,65 @@
+/*
+ * adc.c
+ *
+ *  Created on: Mar 3, 2016
+ *      Author: laurent
+ */
+
+
+#include "stm32f0xx_hal.h"
+#include "adc.h"
+
+extern ADC_HandleTypeDef hadc;
+ADC_ChannelConfTypeDef sConfig;
+
+uint32_t adc_get_value(enum EADC_CHANNEL);
+
+static uint32_t select_adc_channel(enum EADC_CHANNEL);
+static void activate_channel(uint32_t adc_channel);
+static void deactivate_channel(uint32_t adc_channel);
+
+uint32_t adc_get_value(enum EADC_CHANNEL adc_channels)
+{
+  uint32_t adc_channel = select_adc_channel(adc_channels);
+  uint32_t adc_value = 0;
+  uint32_t timeout = 10;
+  activate_channel(adc_channel);
+  HAL_ADC_Start(&hadc);
+  HAL_ADC_PollForConversion(&hadc, timeout);
+  adc_value = HAL_ADC_GetValue(&hadc);
+  HAL_ADC_Stop(&hadc);
+  deactivate_channel(adc_channel);
+  return adc_value;
+}
+
+static uint32_t select_adc_channel(enum EADC_CHANNEL adc_channels)
+{
+  switch(adc_channels)
+  {
+    case ADC_CHANNEL0:  return ADC_CHANNEL_0; break;
+    case ADC_CHANNEL1:  return ADC_CHANNEL_1; break;
+    case ADC_CHANNEL2:  return ADC_CHANNEL_2; break;
+    case ADC_CHANNEL3:  return ADC_CHANNEL_3; break;
+    case ADC_CHANNEL4:  return ADC_CHANNEL_4; break;
+    case ADC_CHANNEL5:  return ADC_CHANNEL_5; break;
+    case ADC_CHANNEL6:  return ADC_CHANNEL_6; break;
+    case ADC_CHANNEL7:  return ADC_CHANNEL_7; break;
+    case ADC_CHANNEL8:  return ADC_CHANNEL_14; break;
+    case ADC_CHANNEL9:  return ADC_CHANNEL_15; break;
+    default:            return ADC_CHANNEL_0;
+  }
+}
+
+static void activate_channel(uint32_t adc_channel)
+{
+  sConfig.Channel = adc_channel;
+  sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
+  HAL_ADC_ConfigChannel(&hadc, &sConfig);
+}
+
+static void deactivate_channel(uint32_t adc_channel)
+{
+  sConfig.Channel = adc_channel;
+  sConfig.Rank = ADC_RANK_NONE;
+  HAL_ADC_ConfigChannel(&hadc, &sConfig);
+}

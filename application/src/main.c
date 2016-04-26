@@ -19,9 +19,9 @@ void job_blink_led(void * pvParameters)
 {
    for(;;)
    {
-       set_pin(LED0, ON);
+       set_pin(LED0, HIGH);
        vTaskDelay(250);
-       set_pin(LED0, OFF);
+       set_pin(LED0, LOW);
        vTaskDelay(250);
    }
 }
@@ -69,7 +69,7 @@ void add_tasks()
     xReturned = xTaskCreate(
                     job_blink_led,
                     "blink_task",
-                    256,
+                    128,
                     ((void*)1),
                     1,
                     &blink_handle);
@@ -77,7 +77,7 @@ void add_tasks()
     xReturned = xTaskCreate(
                     job_fft,
                     "fft_task",
-                    256,
+                    128,
                     ((void*)1),
                     1,
                     &fft_handle);
@@ -85,7 +85,7 @@ void add_tasks()
     xReturned = xTaskCreate(
                     job_sense,
                     "sense_task",
-                    256,
+                    128,
                     ((void*)1),
                     1,
                     &sense_handle);

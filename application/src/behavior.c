@@ -7,6 +7,7 @@
 
 #include <libdorobo32.h>
 #include "environment.h"
+#include "behavior.h"
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -62,7 +63,7 @@ void control_motors(motorflag_t motorflag, uint32_t ticks)
       motorcontrol(MOTOR2,0);
       break;
   }
-  HAL_Delay(ticks);
+  vTaskDelay(ticks);
 }
 
 void handle_distance()

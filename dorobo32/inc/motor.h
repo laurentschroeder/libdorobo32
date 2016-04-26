@@ -13,15 +13,6 @@ enum EMOTOR
   MOTOR0, MOTOR1, MOTOR2, MOTOR3
 };
 
-typedef enum {
-  geradeaus,
-  links,
-  rechts,
-  stop,
-  rueckwaerts,
-  drehen
-}motorflag_t;
-
-extern void motorcontrol(enum EMOTOR, int8_t speed);
+void motorcontrol(enum EMOTOR, int8_t speed);
 
 #endif /* DOROBO32_INC_MOTOR_H_ */

@@ -20,8 +20,6 @@ uint8_t get_pin(enum EDIGITAL epin);
 
 static void selectPin(enum EDIGITAL DIGITAL_pins, pin_t* currentPin);
 
-
-
 void set_pin(enum EDIGITAL epin, enum EDIGITAL_STATE estate)
 {
 	pin_t selectedPin;

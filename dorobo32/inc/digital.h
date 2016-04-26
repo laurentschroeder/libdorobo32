@@ -34,8 +34,8 @@ enum EDIGITAL
 
 enum EDIGITAL_STATE
 {
-  OFF,
-  ON
+  LOW,
+  HIGH
 };
 
 void set_pin(enum EDIGITAL digital_pins, enum EDIGITAL_STATE state);

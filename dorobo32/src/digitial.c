@@ -49,22 +49,22 @@ enum DD_PINLEVEL_E digital_get_dip(enum DD_DIPS_E dip_no)
     {
     case DD_DIP1:
     {
-        level = HAL_GPIO_ReadPin(DIP0_GPIO_Port, DIP0_Pin);
+        level = HAL_GPIO_ReadPin(DIP1_GPIO_Port, DIP1_Pin);
         break;
     }
     case DD_DIP2:
     {
-        level = HAL_GPIO_ReadPin(DIP0_GPIO_Port, DIP1_Pin);
+        level = HAL_GPIO_ReadPin(DIP2_GPIO_Port, DIP2_Pin);
         break;
     }
     case DD_DIP3:
     {
-        level = HAL_GPIO_ReadPin(DIP0_GPIO_Port, DIP2_Pin);
+        level = HAL_GPIO_ReadPin(DIP3_GPIO_Port, DIP3_Pin);
         break;
     }
     case DD_DIP4:
     {
-        level = HAL_GPIO_ReadPin(DIP0_GPIO_Port, DIP3_Pin);
+        level = HAL_GPIO_ReadPin(DIP4_GPIO_Port, DIP4_Pin);
         break;
     }
     }
@@ -149,8 +149,8 @@ static void selectPin(enum DD_PINS_E pin_no, pin_t* currentPin)
     }
     default:
     {
-        currentPin->port = LED0_GPIO_Port;
-        currentPin->pin = LED0_Pin;
+        currentPin->port = LED_GREEN_GPIO_Port;
+        currentPin->pin = LED_GREEN_Pin;
         break;
     }
         ;

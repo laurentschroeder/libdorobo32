@@ -16,18 +16,18 @@
  */
 enum DD_PINS_E
 {
-  DD_PIN_PD14,  //< digital i/o pin D14
-  DD_PIN_PD15,  //< digital i/o pin PD15
-  DD_PIN_PC8,   //< digital i/o pin PC8
-  DD_PIN_PC9,   //< digital i/o pin PC9
-  DD_PIN_PA8,   //< digital i/o pin PA8
-  DD_PIN_PC13,  //< digital i/o pin PC13
-  DD_PIN_PB11,  //< digital i/o pin PB11
-  DD_PIN_PB10,  //< digital i/o pin PB10
-  DD_PIN_PE14,  //< digital i/o pin PE14
-  DD_PIN_PE11,  //< digital i/o pin PE11
-  DD_PIN_PE9,   //< digital i/o pin PE9
-  DD_PIN_PB1    //< digital i/o pin PB1
+    DD_PIN_PD14,  //< digital i/o pin D14
+    DD_PIN_PD15,  //< digital i/o pin PD15
+    DD_PIN_PC8,   //< digital i/o pin PC8
+    DD_PIN_PC9,   //< digital i/o pin PC9
+    DD_PIN_PA8,   //< digital i/o pin PA8
+    DD_PIN_PC13,  //< digital i/o pin PC13
+    DD_PIN_PB11,  //< digital i/o pin PB11
+    DD_PIN_PB10,  //< digital i/o pin PB10
+    DD_PIN_PE14,  //< digital i/o pin PE14
+    DD_PIN_PE11,  //< digital i/o pin PE11
+    DD_PIN_PE9,   //< digital i/o pin PE9
+    DD_PIN_PB1    //< digital i/o pin PB1
 };
 
 /**
@@ -46,8 +46,8 @@ enum DD_DIPS_E
  */
 enum DD_PINLEVEL_E
 {
-  DD_LEVEL_LOW,     //< digital low
-  DD_LEVEL_HIGH     //< digital high
+    DD_LEVEL_LOW,     //< digital low
+    DD_LEVEL_HIGH     //< digital high
 };
 
 /**
@@ -58,7 +58,6 @@ enum DD_PINCONFIG_E
     DD_CFG_OUTPUT,      //< pin output
     DD_CFG_INPUT_PULLUP //< pin input with pullup
 };
-
 
 void digital_init();
 

@@ -1,7 +1,7 @@
 /**
  * DoroboLib32 FFT (DFFT)
  *
- * Funktionen für die Manipulation der digitalen IO Pins.
+ * function for simple fft to detect 100Hz or 125Hz modulated signals
  *
  * Copyright (c) 2016 Laurent Schröder, Claus Fühner
  */
@@ -14,8 +14,8 @@
  */
 enum DFFT_FFT_FREQ_E
 {
-	FFT_FREQ100,    //< 100Hz
-	FFT_FREQ125     //< 125Hz
+    FFT_FREQ100,    //< 100Hz
+    FFT_FREQ125     //< 125Hz
 };
 
 /**

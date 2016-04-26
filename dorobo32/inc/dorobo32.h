@@ -1,7 +1,7 @@
 /**
- * DoroboLib32 Sammel-Header
+ * DoroboLib32 central header
  *
- * Initialisierung für die DoroboLib32 und die gebrächlichsten Module.
+ * initialization of the board and most common modules
  *
  * Copyright (c) 2016 Laurent Schröder, Claus Fühner
  */
@@ -16,7 +16,7 @@
 #include "uart.h"
 
 /**
- * Board-Grundinitialisierung und Initialisierung der Module adc, digital, pwm und uart
+ * board initialization and module initialization.
  */
 void dorobo_init();
 

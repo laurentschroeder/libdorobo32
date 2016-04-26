@@ -11,8 +11,8 @@
 
 enum DUART_UART_E
 {
-  UART1,    //< UART1 instance
-  UART2     //< UART2 instance
+    UART1,    //< UART1 instance
+    UART2     //< UART2 instance
 };
 
 /**

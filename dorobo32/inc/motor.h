@@ -11,10 +11,10 @@
 
 enum DM_MOTORS_E
 {
-  DM_MOTOR0, //< MOTOR0
-  DM_MOTOR1, //< MOTOR0
-  DM_MOTOR2, //< MOTOR0
-  DM_MOTOR3  //< MOTOR0
+    DM_MOTOR0, //< MOTOR0
+    DM_MOTOR1, //< MOTOR0
+    DM_MOTOR2, //< MOTOR0
+    DM_MOTOR3  //< MOTOR0
 };
 
 /**

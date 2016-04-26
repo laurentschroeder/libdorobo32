@@ -37,32 +37,32 @@ void uart_receive(enum DUART_UART_E euart, uint8_t* pbuffer, uint16_t size)
 
 void USART1_IRQHandler(void)
 {
-  HAL_UART_IRQHandler(&huart1);
+    HAL_UART_IRQHandler(&huart1);
 }
 
 void USART2_IRQHandler(void)
 {
-  HAL_UART_IRQHandler(&huart2);
+    HAL_UART_IRQHandler(&huart2);
 }
 
 static UART_HandleTypeDef* select_uart(enum DUART_UART_E euart)
 {
     UART_HandleTypeDef *current_huart = &huart1;
-    switch(euart)
+    switch (euart)
     {
-        case UART1:
-        {
-            current_huart = &huart1;
-            break;
-        }
-        case UART2:
-        {
-            current_huart = &huart2;
-            break;
-        }
-        default:
-            current_huart = &huart1;
-            break;
+    case UART1:
+    {
+        current_huart = &huart1;
+        break;
+    }
+    case UART2:
+    {
+        current_huart = &huart2;
+        break;
+    }
+    default:
+        current_huart = &huart1;
+        break;
     }
     return current_huart;
 }

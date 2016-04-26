@@ -56,7 +56,9 @@ enum DD_PINLEVEL_E
 enum DD_PINCONFIG_E
 {
     DD_CFG_OUTPUT,      //< pin output
-    DD_CFG_INPUT_PULLUP //< pin input with pullup
+    DD_CFG_INPUT_PULLUP, //< pin input with pullup
+    DD_CFG_INPUT_PULLDOWN,
+    DD_CFG_INPUT_NOPULL
 };
 
 void digital_init();

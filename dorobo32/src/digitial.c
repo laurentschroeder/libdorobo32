@@ -16,7 +16,7 @@ typedef struct
     uint16_t pin;
 } pin_t;
 
-static void selectPin(enum DD_PINS_E pin_no, pin_t* currentPin);
+static void select_pin(enum DD_PINS_E pin_no, pin_t* currentPin);
 
 void digital_init()
 {
@@ -25,20 +25,54 @@ void digital_init()
 
 void digital_config_pin(enum DD_PINS_E pin_no, enum DD_PINCONFIG_E direction)
 {
-
+    GPIO_InitTypeDef GPIO_InitStruct;
+    pin_t pin;
+    select_pin(pin_no, &pin);
+    GPIO_InitStruct.Pin = pin.pin;
+    switch(direction)
+    {
+        case DD_CFG_OUTPUT:
+        {
+            GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+            GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+            HAL_GPIO_Init(pin.port, &GPIO_InitStruct);
+            break;
+        }
+        case DD_CFG_INPUT_PULLUP:
+        {
+            GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+            GPIO_InitStruct.Pull = GPIO_PULLUP;
+            HAL_GPIO_Init(pin.port, &GPIO_InitStruct);
+            break;
+        }
+        case DD_CFG_INPUT_PULLDOWN:
+        {
+            GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+            GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+            HAL_GPIO_Init(pin.port, &GPIO_InitStruct);
+            break;
+        }
+        case DD_CFG_INPUT_NOPULL:
+        {
+            GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+            GPIO_InitStruct.Pull = GPIO_NOPULL;
+            HAL_GPIO_Init(pin.port, &GPIO_InitStruct);
+            break;
+        }
+    }
 }
 
 void digital_set_pin(enum DD_PINS_E pin_no, enum DD_PINLEVEL_E level)
 {
     pin_t selectedPin;
-    selectPin(pin_no, &selectedPin);
+    select_pin(pin_no, &selectedPin);
     HAL_GPIO_WritePin(selectedPin.port, selectedPin.pin, level);
 }
 
 enum DD_PINLEVEL_E digital_get_pin(enum DD_PINS_E pin_no)
 {
     pin_t selectedPin;
-    selectPin(pin_no, &selectedPin);
+    select_pin(pin_no, &selectedPin);
     return HAL_GPIO_ReadPin(selectedPin.port, selectedPin.pin);
 }
 
@@ -71,7 +105,7 @@ enum DD_PINLEVEL_E digital_get_dip(enum DD_DIPS_E dip_no)
     return level;
 }
 
-static void selectPin(enum DD_PINS_E pin_no, pin_t* currentPin)
+static void select_pin(enum DD_PINS_E pin_no, pin_t* currentPin)
 {
     switch (pin_no)
     {

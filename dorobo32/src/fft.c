@@ -16,7 +16,7 @@ extern TIM_HandleTypeDef htim6;
 #define SAMPLES 40
 uint8_t fft_sample_index = 0;
 uint8_t fft_samples_ready = 0;
-enum EDIGITAL sample_pin;
+enum DD_PINS_E sample_pin;
 
 
 
@@ -35,9 +35,9 @@ const static int8_t STEUERVEKTOR_IM10_[] = {
 
 static uint8_t signal1_[SAMPLES];
 
-uint16_t fft_simple(enum EFFT_FREQ efft_freq, enum EDIGITAL epin)
+uint16_t fft_simple(enum DFFT_FFT_FREQ_E efft_freq, enum DD_PINS_E pin_no)
 {
-	sample_pin = epin;
+	sample_pin = pin_no;
 	fft_samples_ready = 0;
 	HAL_TIM_Base_Start_IT(&htim6);
 	int16_t real = 0;
@@ -85,7 +85,7 @@ void fft_get_samples()
 	}
 	else
 	{
-		signal1_[fft_sample_index] = get_pin(sample_pin);
+		signal1_[fft_sample_index] = digital_get_pin(sample_pin);
 		fft_sample_index++;
 	}
 }

@@ -9,7 +9,6 @@
 #include "mxconstants.h"
 #include "stdlib.h"
 #include "motor.h"
-#include "cmsis_os.h"
 
 extern TIM_HandleTypeDef htim3;
 TIM_OC_InitTypeDef sConfigOC;
@@ -65,8 +64,7 @@ static motor_t motor3 =
   };
 
 static void set_speed(motor_t *, int8_t);
-static motor_t* select_motor (enum EMOTOR);
-static void pwm_ramp(motor_t *motorptr, uint8_t old_value, uint8_t new_value);
+static motor_t* select_motor (enum DM_MOTORS_E);
 
 static void set_speed(motor_t *motorptr, int8_t new_speed)
 {
@@ -79,88 +77,50 @@ static void set_speed(motor_t *motorptr, int8_t new_speed)
       new_speed = 100;
     }
 
-  if((motorptr->speed < 0) && (new_speed < 0))
+  if(new_speed < 0)
     {
-      pwm_ramp(motorptr, abs(motorptr->speed), abs(new_speed));
-    }
-  else if((motorptr->speed < 0) && (new_speed > 0))
-    {
-      pwm_ramp(motorptr, abs(motorptr->speed), 0);
-      motorptr->controlPORT1->BSRR = motorptr->controlPIN1;
-      motorptr->controlPORT2->BRR = motorptr->controlPIN2;
-      pwm_ramp(motorptr, abs(motorptr->speed), abs(new_speed));
-    }
-  else if((motorptr->speed >= 0) && (new_speed < 0))
-    {
-      pwm_ramp(motorptr, abs(motorptr->speed), 0);
       motorptr->controlPORT1->BRR = motorptr->controlPIN1;
       motorptr->controlPORT2->BSRR = motorptr->controlPIN2;
-      pwm_ramp(motorptr, abs(motorptr->speed), abs(new_speed));
     }
   else
     {
-	  motorptr->controlPORT1->BSRR = motorptr->controlPIN1;
-	  motorptr->controlPORT2->BRR = motorptr->controlPIN2;
-      pwm_ramp(motorptr, abs(motorptr->speed), abs(new_speed));
+      motorptr->controlPORT1->BSRR = motorptr->controlPIN1;
+      motorptr->controlPORT2->BRR = motorptr->controlPIN2;
     }
 
-  motorptr->speed = new_speed;
+      sConfigOC.OCMode = TIM_OCMODE_PWM1;
+      sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+      sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+      sConfigOC.Pulse = abs(new_speed);
+      HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, motorptr->timerChannel);
+      HAL_TIM_PWM_Start(&htim3, motorptr->timerChannel);
+
+      motorptr->speed = new_speed;
 }
 
-static motor_t* select_motor (enum EMOTOR motoren)
+static motor_t* select_motor (enum DM_MOTORS_E motoren)
 {
   motor_t *motorptr = NULL;
   switch (motoren)
     {
-    case MOTOR0:
+    case DM_MOTOR0:
       motorptr = &motor0;
       break;
-    case MOTOR1:
+    case DM_MOTOR1:
       motorptr = &motor1;
       break;
-    case MOTOR2:
+    case DM_MOTOR2:
       motorptr = &motor2;
       break;
-    case MOTOR3:
+    case DM_MOTOR3:
       motorptr = &motor3;
       break;
     }
   return motorptr;
 }
 
-void motorcontrol(enum EMOTOR motoren, int8_t speed)
+void motor_set(enum DM_MOTORS_E motoren, int8_t speed)
 {
   motor_t *motorptr = select_motor (motoren);
   set_speed(motorptr, speed);
-}
-
-static void pwm_ramp(motor_t *motorptr, uint8_t old_value, uint8_t new_value)
-{
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  uint8_t i;
-
-  if(old_value < new_value)
-    {
-      for(i = old_value; i <= new_value; i++)
-        {
-          sConfigOC.Pulse = old_value + i;
-          HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, motorptr->timerChannel);
-          HAL_TIM_PWM_Start(&htim3, motorptr->timerChannel);
-          vTaskDelay(1);
-        }
-    }
-  else if(old_value > new_value)
-    {
-      for(i = new_value; i <= old_value; i++)
-        {
-          sConfigOC.Pulse = old_value - i;
-          HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, motorptr->timerChannel);
-          HAL_TIM_PWM_Start(&htim3, motorptr->timerChannel);
-          vTaskDelay(1);
-        }
-    }
-
-  motorptr->speed = new_value;
 }

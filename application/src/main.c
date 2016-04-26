@@ -5,7 +5,7 @@
  *      Author: Laurent
  */
 
-#include <libdorobo32.h>
+#include <dorobo32.h>
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -16,9 +16,9 @@ void job_blink_led(void * pvParameters)
 {
    for(;;)
    {
-       set_pin(LED0, HIGH);
+       led_green(DD_LEVEL_HIGH);
        vTaskDelay(250);
-       set_pin(LED0, LOW);
+       led_green(DD_LEVEL_LOW);
        vTaskDelay(250);
    }
 }
